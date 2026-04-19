@@ -1,0 +1,21 @@
+.Menu {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 15px;
+    background-color: lightgray;
+}
+
+.Menu a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.Menu a.active {
+    color: royalblue;
+}
+
+.Menu button {
+    cursor: pointer;
+}

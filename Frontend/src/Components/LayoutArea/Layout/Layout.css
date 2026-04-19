@@ -1,0 +1,11 @@
+.Layout {
+    width: 95%;
+    max-width: 1300px;
+    margin: auto;
+}
+
+.Layout main {
+    min-height: 600px;
+    background-color: white;
+    padding: 20px;
+}

@@ -1,0 +1,75 @@
+services:
+
+  mysql-service:
+    image: mysql:8
+    container_name: mysql-container
+
+    environment:
+      MYSQL_ROOT_PASSWORD: trhvayhbcrd123
+      MYSQL_DATABASE: vacations_db
+
+    ports:
+      - "3308:3306"
+
+    volumes:
+      - mysql-volume:/var/lib/mysql
+      - ./Database:/docker-entrypoint-initdb.d
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ptrhvayhbcrd123"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  backend-service:
+    build:
+      context: .
+      dockerfile: ./Backend/Dockerfile
+
+    image: vacations-backend-image
+    container_name: vacations-backend-container
+
+    environment:
+      ENVIRONMENT: development
+      PORT: 4000
+      MYSQL_HOST: mysql-service
+      MYSQL_USER: root
+      MYSQL_PASSWORD: trhvayhbcrd123
+      MYSQL_DATABASE: vacations_db
+      JWT_SECRET: ThisIsMyVerySecretKey123
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+
+    ports:
+      - "4001:4000"
+
+    volumes:
+      - images-volume:/app/src/1-assets/images
+
+    depends_on:
+      mysql-service:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+  frontend-service:
+    build:
+      context: .
+      dockerfile: ./Frontend/Dockerfile
+
+    image: vacations-frontend-image
+    container_name: vacations-frontend-container
+
+    ports:
+      - "5173:80"
+
+    depends_on:
+      - backend-service
+
+    restart: unless-stopped
+
+volumes:
+  mysql-volume:
+  images-volume:
