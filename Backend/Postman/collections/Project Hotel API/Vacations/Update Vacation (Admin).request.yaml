@@ -1,0 +1,26 @@
+$kind: http-request
+description: Admin only. Uses the ID returned by Add Vacation.
+url: "{{baseUrl}}/vacations/{{newVacationId}}"
+method: PUT
+body:
+  type: formdata
+  content:
+    - type: text
+      key: destination
+      value: Tokyo, Japan - Updated
+    - type: text
+      key: description
+      value: Updated vacation description for testing.
+    - type: text
+      key: startDate
+      value: 2026-12-12
+    - type: text
+      key: endDate
+      value: 2026-12-20
+    - type: text
+      key: price
+      value: "3499"
+    - type: file
+      key: image
+      src: ""
+order: 3000

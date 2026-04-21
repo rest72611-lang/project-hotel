@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, Navigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { VacationModel } from "../../../Models/VacationModel";
 import { vacationService } from "../../../Services/VacationService";
 import { notify } from "../../../Utils/Notify";
 import { authService } from "../../../Services/AuthService";
-import "./EditVacation.css";
+import "../AdminVacationForm.css";
 
-function EditVacation(){
+function EditVacation() {
 
     if (!authService.isLoggedIn()) {
         return <Navigate to="/login" />;
@@ -30,12 +30,10 @@ function EditVacation(){
     } = useForm<VacationModel>();
 
     const startDate = watch("startDate");
-
-    function getToday(): string {
-        return new Date().toISOString().split("T")[0];
-    }
+    const imageName = watch("imageName");
 
     useEffect(() => {
+        // Reuses the vacations list instead of adding a dedicated "get by id" frontend endpoint.
         vacationService.getAllVacations()
             .then(vacations => {
                 const found = vacations.find(v => v.vacationId === +params.vacationId!);
@@ -50,8 +48,9 @@ function EditVacation(){
                 setValue("description", found.description);
                 setValue("startDate", found.startDate.slice(0, 10));
                 setValue("endDate", found.endDate.slice(0, 10));
-                setValue("price", found.price);
+                setValue("price", Number(found.price));
                 setValue("imageName", found.imageName);
+                // These extra fields are preserved so the form model stays consistent with the card model.
                 setValue("likesCount", found.likesCount);
                 setValue("isLiked", found.isLiked);
             })
@@ -70,74 +69,141 @@ function EditVacation(){
     }
 
     return (
-        <form onSubmit={handleSubmit(submit)}>
-            <h2>Edit Vacation</h2>
+        <div className="AdminVacationPage">
+            <div className="AdminVacationCard">
+                <div className="AdminVacationIntro">
+                    <span className="AdminVacationEyebrow">Admin Workspace</span>
+                    <h2>Refine an existing vacation.</h2>
+                    <p>
+                        Update trip details, adjust pricing and dates, and replace
+                        the current image when you want to refresh the listing.
+                    </p>
+                </div>
 
-            <label>Destination:</label>
-            <input
-                type="text"
-                {...register("destination", {
-                    required: "Destination is required",
-                    minLength: { value: 2, message: "Minimum 2 characters" }
-                })}
-            />
-            <span>{errors.destination?.message}</span>
+                <form className="AdminVacationForm" onSubmit={handleSubmit(submit)}>
+                    <div className="AdminVacationFormHeader">
+                        <h3>Edit Vacation</h3>
+                        <p>Update the vacation details and save your changes.</p>
+                    </div>
 
-            <label>Description:</label>
-            <textarea
-                {...register("description", {
-                    required: "Description is required",
-                    minLength: { value: 2, message: "Minimum 2 characters" }
-                })}
-            />
-            <span>{errors.description?.message}</span>
+                    <div className="AdminVacationGrid">
+                        <div className="AdminVacationField">
+                            <label htmlFor="edit-destination">Destination</label>
+                            <input
+                                id="edit-destination"
+                                type="text"
+                                placeholder="Destination"
+                                {...register("destination", {
+                                    required: "Destination is required.",
+                                    minLength: {
+                                        value: 2,
+                                        message: "Destination must be at least 2 characters."
+                                    },
+                                    maxLength: {
+                                        value: 100,
+                                        message: "Destination can't exceed 100 characters."
+                                    }
+                                })}
+                            />
+                            <div className="AdminVacationError">{errors.destination?.message}</div>
+                        </div>
 
-            <label>Start Date:</label>
-            <input
-                type="date"
-                min={getToday()}
-                {...register("startDate", {
-                    required: "Start date is required",
-                    validate: value =>
-                        value >= getToday() || "Start date can't be in the past"
-                })}
-            />
-            <span>{errors.startDate?.message}</span>
+                        <div className="AdminVacationField">
+                            <label htmlFor="edit-price">Price</label>
+                            <input
+                                id="edit-price"
+                                type="number"
+                                placeholder="Price"
+                                step="0.01"
+                                {...register("price", {
+                                    required: "Price is required.",
+                                    valueAsNumber: true,
+                                    validate: value => {
+                                        if (value < 0) return "Price can't be negative.";
+                                        if (value > 10000) return "Price can't be higher than 10,000.";
+                                        return true;
+                                    }
+                                })}
+                            />
+                            <div className="AdminVacationError">{errors.price?.message}</div>
+                        </div>
 
-            <label>End Date:</label>
-            <input
-                type="date"
-                min={startDate || getToday()}
-                {...register("endDate", {
-                    required: "End date is required",
-                    validate: value => {
-                        if (value < getToday()) return "End date can't be in the past";
-                        if (startDate && value < startDate) return "End date can't be before start date";
-                        return true;
-                    }
-                })}
-            />
-            <span>{errors.endDate?.message}</span>
+                        <div className="AdminVacationField">
+                            <label htmlFor="edit-start-date">Start Date</label>
+                            <input
+                                id="edit-start-date"
+                                type="date"
+                                {...register("startDate", {
+                                    required: "Start date is required."
+                                })}
+                            />
+                            <div className="AdminVacationError">{errors.startDate?.message}</div>
+                        </div>
 
-            <label>Price:</label>
-            <input
-                type="number"
-                {...register("price", {
-                    required: "Price is required",
-                    min: { value: 1, message: "Price must be greater than 0" }
-                })}
-            />
-            <span>{errors.price?.message}</span>
+                        <div className="AdminVacationField">
+                            <label htmlFor="edit-end-date">End Date</label>
+                            <input
+                                id="edit-end-date"
+                                type="date"
+                                min={startDate || undefined}
+                                {...register("endDate", {
+                                    required: "End date is required.",
+                                    validate: value => {
+                                        if (startDate && value < startDate) return "End date can't be before start date.";
+                                        return true;
+                                    }
+                                })}
+                            />
+                            <div className="AdminVacationError">{errors.endDate?.message}</div>
+                        </div>
 
-            <label>Image:</label>
-            <input
-                type="file"
-                accept="image/*"
-                onChange={e => setImage(e.target.files?.[0])}
-            />
+                        <div className="AdminVacationField AdminVacationFieldFull">
+                            <label htmlFor="edit-description">Description</label>
+                            <textarea
+                                id="edit-description"
+                                placeholder="Description"
+                                {...register("description", {
+                                    required: "Description is required.",
+                                    minLength: {
+                                        value: 2,
+                                        message: "Description must be at least 2 characters."
+                                    },
+                                    maxLength: {
+                                        value: 1000,
+                                        message: "Description can't exceed 1000 characters."
+                                    }
+                                })}
+                            />
+                            <div className="AdminVacationError">{errors.description?.message}</div>
+                        </div>
 
-            <button type="submit">Update</button>
-        </form>
+                        <div className="AdminVacationField AdminVacationFieldFull">
+                            <label htmlFor="edit-image">Replace Image</label>
+                            <input
+                                id="edit-image"
+                                type="file"
+                                accept="image/*"
+                                onChange={e => setImage(e.target.files?.[0])}
+                            />
+                            <p className="AdminVacationHint">
+                                Current image: {imageName || "No image saved"}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="AdminVacationActions">
+                        <button className="AdminVacationPrimaryButton" type="submit">Save Changes</button>
+                        <button
+                            className="AdminVacationSecondaryButton"
+                            type="button"
+                            onClick={() => navigate("/vacations")}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     );
 }
 

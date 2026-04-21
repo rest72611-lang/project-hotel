@@ -1,0 +1,10 @@
+$kind: http-request
+description: Logged-in user adds a like to a vacation.
+url: "{{baseUrl}}/likes/{{vacationId}}"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: "{}"
+order: 1000

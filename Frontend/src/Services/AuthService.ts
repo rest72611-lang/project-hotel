@@ -4,16 +4,31 @@ import { UserModel } from "../Models/UserModel";
 import { appConfig } from "../Utils/AppConfig";
 import { api } from "./Service";
 
+// Keeps auth state in one place so UI components can stay mostly declarative.
 class AuthService {
+    private readonly authChangedEvent = "auth-changed";
 
     public getUser(): UserModel | null {
         const json = localStorage.getItem("user");
-        if (!json) return null;
-        return JSON.parse(json);
+        if (json) {
+            return JSON.parse(json) as UserModel;
+        }
+
+        const token = localStorage.getItem("token");
+        if (!token) return null;
+
+        try {
+            // Rebuild the cached user from the token if localStorage lost the serialized user object.
+            return this.saveToken(token);
+        }
+        catch {
+            this.logout();
+            return null;
+        }
     }
 
     public isLoggedIn(): boolean {
-        return !!localStorage.getItem("token");
+        return !!this.getUser();
     }
 
     public isAdmin(): boolean {
@@ -23,11 +38,21 @@ class AuthService {
     public logout(): void {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        // Components subscribe to this event so logout propagates without a hard reload.
+        window.dispatchEvent(new Event(this.authChangedEvent));
+    }
+
+    public subscribe(callback: () => void): () => void {
+        window.addEventListener(this.authChangedEvent, callback);
+        return () => window.removeEventListener(this.authChangedEvent, callback);
     }
 
     private decodeToken(token: string): any {
+        // JWT payloads use base64url, so we normalize them before calling atob.
         const payload = token.split(".")[1];
-        const json = atob(payload);
+        const normalizedPayload = payload.replace(/-/g, "+").replace(/_/g, "/");
+        const paddedPayload = normalizedPayload.padEnd(Math.ceil(normalizedPayload.length / 4) * 4, "=");
+        const json = atob(paddedPayload);
         return JSON.parse(json);
     }
 
@@ -46,10 +71,13 @@ class AuthService {
         };
 
         localStorage.setItem("user", JSON.stringify(user));
+        // The same event is reused for login/register so header and menu refresh immediately.
+        window.dispatchEvent(new Event(this.authChangedEvent));
         return user;
     }
 
     private extractToken(data: any): string {
+        // The backend currently returns the raw token string, but this keeps the client tolerant.
         if (typeof data === "string") return data;
         if (data?.token) return data.token;
         return "";

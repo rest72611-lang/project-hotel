@@ -2,6 +2,7 @@ import { VacationModel } from "../Models/VacationModel";
 import { appConfig } from "../Utils/AppConfig";
 import { api } from "./Service";
 
+// Concentrates vacation-related client logic so components can stay focused on rendering and UX.
 class VacationService {
 
     public async getAllVacations(): Promise<VacationModel[]> {
@@ -37,6 +38,7 @@ class VacationService {
         const now = new Date();
 
         if (filter === "liked") {
+            // isLiked is computed by the backend for the current user.
             return vacations.filter(v => v.isLiked === 1);
         }
 
@@ -69,11 +71,12 @@ class VacationService {
     public async addVacation(vacation: VacationModel, image?: File): Promise<void> {
         const formData = new FormData();
 
+        // Dates are trimmed to YYYY-MM-DD because the backend validation expects date-only strings.
         formData.append("destination", vacation.destination);
         formData.append("description", vacation.description);
         formData.append("startDate", vacation.startDate.slice(0, 10));
         formData.append("endDate", vacation.endDate.slice(0, 10));
-        formData.append("price", vacation.price);
+        formData.append("price", String(vacation.price));
 
         if (image) {
             formData.append("image", image);
@@ -89,7 +92,7 @@ class VacationService {
         formData.append("description", vacation.description);
         formData.append("startDate", vacation.startDate.slice(0, 10));
         formData.append("endDate", vacation.endDate.slice(0, 10));
-        formData.append("price", vacation.price);
+        formData.append("price", String(vacation.price));
 
         if (image) {
             formData.append("image", image);
@@ -111,6 +114,7 @@ class VacationService {
         currentPage: number,
         vacationsPerPage: number
     ): VacationModel[] {
+        // Pagination stays client-side because the dataset is small for this project.
         const startIndex = (currentPage - 1) * vacationsPerPage;
         const endIndex = startIndex + vacationsPerPage;
         return vacations.slice(startIndex, endIndex);

@@ -1,0 +1,18 @@
+$kind: http-request
+name: Ask MCP / AI
+description: No auth middleware in the backend right now. It expects userId and
+  question in the request body.
+url: "{{baseUrl}}/ai/ask"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "userId": {{currentUserId}},
+      "question": "Show me the vacations with the highest likes count."
+    }
+auth:
+  type: noauth
+order: 2000

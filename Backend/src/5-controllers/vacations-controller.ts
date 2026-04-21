@@ -6,6 +6,7 @@ import { StatusCode } from "../3-models/enums";
 import { verifyAdmin } from "../6-middleware/verify-admin";
 import { verifyLoggedIn } from "../6-middleware/verify-logged-in";
 
+// Maps HTTP concerns to service calls and leaves business rules to the service layer.
 class VacationsController {
 
     public router: Router = express.Router();
@@ -20,6 +21,7 @@ class VacationsController {
     private async getAllVacations(request: Request, response: Response, next: NextFunction) {
         try {
             const user = (request as any).user;
+            // The current user id is required because the query computes the personalized isLiked flag.
             const vacations = await vacationsService.getAllVacations(user.userId);
             response.status(StatusCode.Ok).json(vacations);
         }
@@ -32,6 +34,7 @@ class VacationsController {
         try {
             const vacation = {
                 ...request.body,
+                // Multipart form fields arrive as strings, so numeric normalization happens here.
                 price: +request.body.price,
                 image: request.files?.image as any
             };

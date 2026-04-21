@@ -1,6 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { mcpRegister } from "./mcp-register";
 
+// Factory for a fully registered MCP server instance.
 class VacationsMcpServer {
 
     public createMcpServer(): McpServer {
@@ -9,6 +10,7 @@ class VacationsMcpServer {
             version: "1.0.0"
         });
 
+        // Tool registration stays centralized so future tools are added in one place.
         mcpRegister.registerGetAllVacationsTool(mcpServer);
         mcpRegister.registerGetVacationByIdTool(mcpServer);
 

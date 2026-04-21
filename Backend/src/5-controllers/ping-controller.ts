@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response, Router } from "express";
 import { StatusCode } from "../3-models/enums";
 
+// Lightweight health endpoint for quick connectivity checks and Postman smoke tests.
 class PingController {
 
     public router: Router = express.Router();

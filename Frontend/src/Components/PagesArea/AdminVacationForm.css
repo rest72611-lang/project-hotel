@@ -1,0 +1,182 @@
+.AdminVacationPage {
+    min-height: calc(100vh - 220px);
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.AdminVacationCard {
+    width: min(1120px, 100%);
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) minmax(340px, 1.1fr);
+    border-radius: 26px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 24px 52px rgba(18, 45, 90, 0.12);
+}
+
+.AdminVacationIntro {
+    padding: 38px;
+    background:
+        radial-gradient(circle at top left, rgba(157, 197, 255, 0.38), transparent 28%),
+        linear-gradient(145deg, #173f8d 0%, #2862ca 52%, #93bcff 100%);
+    color: white;
+}
+
+.AdminVacationEyebrow {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.AdminVacationIntro h2 {
+    margin: 18px 0 14px;
+    font-size: clamp(1.9rem, 3vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+}
+
+.AdminVacationIntro p {
+    margin: 0;
+    max-width: 44ch;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.AdminVacationForm {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 34px;
+}
+
+.AdminVacationFormHeader h3 {
+    margin: 0;
+    font-size: 1.65rem;
+    color: #173666;
+}
+
+.AdminVacationFormHeader p {
+    margin: 8px 0 0;
+    line-height: 1.65;
+    color: #55657a;
+}
+
+.AdminVacationGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.AdminVacationField {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.AdminVacationFieldFull {
+    grid-column: 1 / -1;
+}
+
+.AdminVacationField label {
+    font-weight: 700;
+    color: #24456f;
+}
+
+.AdminVacationField input,
+.AdminVacationField textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #d4dceb;
+    background: #f8fbff;
+    font-size: 0.98rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.AdminVacationField textarea {
+    min-height: 124px;
+    resize: vertical;
+}
+
+.AdminVacationField input:focus,
+.AdminVacationField textarea:focus {
+    outline: none;
+    border-color: #4d7ae4;
+    box-shadow: 0 0 0 4px rgba(77, 122, 228, 0.14);
+    background: #ffffff;
+}
+
+.AdminVacationActions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.AdminVacationPrimaryButton,
+.AdminVacationSecondaryButton {
+    min-width: 150px;
+    height: 48px;
+    padding: 0 18px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.AdminVacationPrimaryButton {
+    border: none;
+    background: linear-gradient(135deg, #2d5fd4 0%, #4b75e6 100%);
+    color: white;
+    box-shadow: 0 12px 24px rgba(45, 95, 212, 0.24);
+}
+
+.AdminVacationSecondaryButton {
+    border: 1px solid rgba(49, 90, 168, 0.18);
+    background: #ffffff;
+    color: #21457f;
+}
+
+.AdminVacationPrimaryButton:hover,
+.AdminVacationSecondaryButton:hover {
+    transform: translateY(-1px);
+}
+
+.AdminVacationError {
+    min-height: 18px;
+    font-size: 0.9rem;
+    color: #c03d57;
+}
+
+.AdminVacationHint {
+    margin: 0;
+    font-size: 0.92rem;
+    color: #59697c;
+}
+
+@media (max-width: 900px) {
+    .AdminVacationPage {
+        padding: 18px;
+    }
+
+    .AdminVacationCard {
+        grid-template-columns: 1fr;
+    }
+
+    .AdminVacationIntro,
+    .AdminVacationForm {
+        padding: 24px;
+    }
+
+    .AdminVacationGrid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,21 +1,52 @@
 .Menu {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     align-items: center;
-    padding: 15px;
-    background-color: lightgray;
+    flex-wrap: wrap;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 14px 30px rgba(30, 58, 109, 0.08);
 }
 
 .Menu a {
     text-decoration: none;
-    color: black;
-    font-weight: bold;
+    color: #264775;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 12px;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.Menu a:hover {
+    background: #edf4ff;
+    transform: translateY(-1px);
 }
 
 .Menu a.active {
-    color: royalblue;
+    color: white;
+    background: linear-gradient(135deg, #2d5fd4 0%, #4b75e6 100%);
+    box-shadow: 0 10px 18px rgba(45, 95, 212, 0.2);
 }
 
-.Menu button {
+.MenuLogout {
+    margin-inline-start: auto;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2d5fd4 0%, #4b75e6 100%);
+    color: white;
+    font-weight: 700;
     cursor: pointer;
+    box-shadow: 0 10px 18px rgba(45, 95, 212, 0.18);
+}
+
+@media (max-width: 700px) {
+    .Menu {
+        padding: 14px 16px 18px;
+    }
+
+    .MenuLogout {
+        margin-inline-start: 0;
+    }
 }

@@ -1,5 +1,6 @@
 import { StatusCode } from "./enums";
 
+// Base type for expected client-facing failures that should preserve a specific HTTP status.
 abstract class BaseClientError {
     public status: StatusCode;
     public message: string;

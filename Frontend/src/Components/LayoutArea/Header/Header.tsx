@@ -1,22 +1,32 @@
-
+import { useEffect, useState } from "react";
 import { authService } from "../../../Services/AuthService";
+import { UserModel } from "../../../Models/UserModel";
 import "./Header.css";
 
 function Header() {
+    const [user, setUser] = useState<UserModel | null>(() => authService.getUser());
 
-    const user = authService.getUser();
+    useEffect(() => {
+        // Subscribe once so the greeting updates immediately after auth changes elsewhere in the app.
+        return authService.subscribe(() => {
+            setUser(authService.getUser());
+        });
+    }, []);
 
     return (
         <div className="Header">
-            <h1>Vacation System</h1>
+            <div className="HeaderBrand">
+                <span className="HeaderEyebrow">Travel Dashboard</span>
+                <h1>Vacation System</h1>
+            </div>
 
-            <div>
+            <div className="HeaderUser">
                 {user ? (
-                    <span>
-                        Hello {user.firstName} ({user.role})
+                    <span className="HeaderUserBadge">
+                        Hello {user.firstName} {user.lastName} ({user.role})
                     </span>
                 ) : (
-                    <span>Hello Guest</span>
+                    <span className="HeaderUserBadge">Hello Guest</span>
                 )}
             </div>
         </div>

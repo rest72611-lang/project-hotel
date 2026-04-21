@@ -1,3 +1,4 @@
+// Frontend URL catalog so endpoint changes stay centralized.
 class AppConfig {
     public readonly serverUrl = "http://localhost:4001";
     public readonly baseUrl = `${this.serverUrl}/api`;
@@ -15,7 +16,3 @@ class AppConfig {
 }
 
 export const appConfig = new AppConfig();
-    
-
-
-

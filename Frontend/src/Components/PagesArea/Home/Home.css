@@ -1,0 +1,148 @@
+.Home {
+    padding: 28px;
+    color: #132238;
+}
+
+.HomeHero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
+    gap: 24px;
+    align-items: stretch;
+    padding: 32px;
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at top right, rgba(123, 164, 255, 0.35), transparent 32%),
+        linear-gradient(135deg, #ffffff 0%, #eef4ff 50%, #dbe7ff 100%);
+    box-shadow: 0 18px 40px rgba(34, 71, 136, 0.12);
+}
+
+.HeroContent h1 {
+    margin: 8px 0 16px;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+}
+
+.HeroContent p {
+    max-width: 58ch;
+    margin: 0 0 24px;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #42556f;
+}
+
+.HeroEyebrow {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #dbe7ff;
+    color: #315aa8;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.HeroActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.PrimaryAction,
+.SecondaryAction {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 156px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.PrimaryAction {
+    background: linear-gradient(135deg, #2d5fd4 0%, #4b75e6 100%);
+    color: white;
+    box-shadow: 0 10px 20px rgba(45, 95, 212, 0.24);
+}
+
+.SecondaryAction {
+    background: rgba(255, 255, 255, 0.9);
+    color: #21457f;
+    border: 1px solid rgba(49, 90, 168, 0.18);
+}
+
+.PrimaryAction:hover,
+.SecondaryAction:hover {
+    transform: translateY(-1px);
+}
+
+.HeroPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.StatCard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.74);
+    border: 1px solid rgba(72, 108, 181, 0.15);
+    backdrop-filter: blur(8px);
+}
+
+.StatCard strong {
+    font-size: 1rem;
+    color: #173666;
+}
+
+.StatCard span {
+    color: #4f6076;
+    line-height: 1.6;
+}
+
+.HomeHighlights {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 24px;
+}
+
+.HighlightCard {
+    padding: 22px;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 12px 30px rgba(25, 49, 94, 0.08);
+}
+
+.HighlightCard h3 {
+    margin: 0 0 10px;
+    font-size: 1.15rem;
+    color: #1d3f73;
+}
+
+.HighlightCard p {
+    margin: 0;
+    line-height: 1.7;
+    color: #4f6076;
+}
+
+@media (max-width: 900px) {
+    .HomeHero,
+    .HomeHighlights {
+        grid-template-columns: 1fr;
+    }
+
+    .Home {
+        padding: 18px;
+    }
+
+    .HomeHero {
+        padding: 22px;
+    }
+}

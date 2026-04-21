@@ -1,0 +1,38 @@
+$kind: http-request
+description: Admin only. Choose a real file for the image field in Postman before sending.
+url: "{{baseUrl}}/vacations"
+method: POST
+body:
+  type: formdata
+  content:
+    - type: text
+      key: destination
+      value: Tokyo, Japan
+    - type: text
+      key: description
+      value: Modern city break with food, culture, and day trips.
+    - type: text
+      key: startDate
+      value: 2026-12-10
+    - type: text
+      key: endDate
+      value: 2026-12-18
+    - type: text
+      key: price
+      value: "3299"
+    - type: file
+      key: image
+      src: ""
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Add vacation returned success', function () {
+          pm.response.to.have.status(201);
+      });
+
+      const body = pm.response.json();
+      if (body && body.vacationId) {
+          pm.collectionVariables.set('newVacationId', String(body.vacationId));
+      }
+    language: text/javascript
+order: 2000

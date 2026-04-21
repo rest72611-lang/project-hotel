@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config({ quiet: true });
 
+// Centralizes environment access so the rest of the codebase does not read process.env directly.
 class AppConfig {
     public readonly isDevelopment = process.env.ENVIRONMENT === "development";
     public readonly isProduction = process.env.ENVIRONMENT === "production";

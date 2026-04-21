@@ -1,62 +1,69 @@
 .McpPage {
     width: 100%;
-    max-width: 900px;
+    max-width: 1040px;
     margin: 0 auto;
-    padding: 30px 20px;
-    direction: rtl;
-    text-align: center;
+    padding: 8px 4px;
 }
 
 .McpPage h1 {
-    font-size: 30px;
-    margin-bottom: 30px;
+    margin: 0 0 18px;
+    font-size: clamp(1.9rem, 3vw, 2.6rem);
+    color: #173666;
+    letter-spacing: -0.03em;
 }
 
 .questionCard {
-    width: 260px;
-    margin: 0 auto 30px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    background-color: white;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
-    border-radius: 4px;
-    direction: ltr;
+    max-width: 760px;
+    margin: 0 auto 24px;
+    padding: 24px;
+    border: 1px solid rgba(49, 90, 168, 0.1);
+    background:
+        radial-gradient(circle at top right, rgba(157, 197, 255, 0.22), transparent 28%),
+        linear-gradient(140deg, #ffffff 0%, #eef4ff 48%, #dbe7ff 100%);
+    box-shadow: 0 16px 34px rgba(25, 49, 94, 0.08);
+    border-radius: 22px;
     text-align: left;
 }
 
 .questionCard h2 {
-    color: #1697e8;
-    font-size: 20px;
+    color: #173666;
+    font-size: 1.5rem;
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .questionCard label {
     display: block;
-    margin-bottom: 8px;
-    font-size: 13px;
-    color: #444;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #2a4b78;
 }
 
 .questionCard textarea {
     width: 100%;
-    height: 80px;
-    resize: none;
-    padding: 8px;
+    min-height: 130px;
+    resize: vertical;
+    padding: 14px;
     margin-bottom: 14px;
-    border: 1px solid #bbb;
-    font-size: 14px;
+    border: 1px solid #d4dceb;
+    border-radius: 12px;
+    background: white;
+    box-sizing: border-box;
+    font-size: 0.98rem;
 }
 
 .questionCard button {
     width: 100%;
-    padding: 10px;
-    background-color: #1697e8;
+    padding: 12px;
+    background: linear-gradient(135deg, #2d5fd4 0%, #4b75e6 100%);
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 15px;
-    border-radius: 2px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(45, 95, 212, 0.18);
 }
 
 .questionCard button:disabled {
@@ -66,33 +73,31 @@
 
 .errorText {
     margin-top: 12px;
-    color: red;
+    color: #c03d57;
     font-size: 14px;
-    text-align: right;
-    direction: rtl;
 }
 
 .answerBox {
-    margin-top: 30px;
-    text-align: right;
-    background-color: white;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    margin-top: 24px;
+    background: #ffffff;
+    padding: 24px;
+    border: 1px solid rgba(49, 90, 168, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 14px 30px rgba(25, 49, 94, 0.08);
 }
 
 .answerBox h3 {
     margin-top: 0;
+    color: #173666;
 }
 
 .answerBox pre {
     white-space: pre-wrap;
     word-break: break-word;
-    background-color: #111;
-    color: #0f0;
-    padding: 15px;
-    border-radius: 6px;
+    background: #122038;
+    color: #eef5ff;
+    padding: 18px;
+    border-radius: 14px;
     overflow: auto;
-    direction: rtl;
-    text-align: right;
+    line-height: 1.7;
 }

@@ -9,11 +9,13 @@ import { UserModel } from "../3-models/user-model";
 import { validateCredentials } from "../3-models/credentials-validation";
 import { validateUser } from "../3-models/user-validation";
 
+// Centralizes authentication rules so controllers stay thin and transport-focused.
 class AuthService {
 
     private readonly saltRounds = 10;
 
     public async register(user: UserModel): Promise<string> {
+        // Validate early so the database layer only sees normalized, expected input.
         validateUser(user);
 
         const sqlCheck = `SELECT userId FROM users WHERE email = ?`;
@@ -36,9 +38,11 @@ class AuthService {
             user.lastName,
             user.email,
             passwordHash,
+            // New registrations are intentionally always regular users.
             Role.User
         ]) as ResultSetHeader;
 
+        // The client relies on the JWT payload as the single source of user identity.
         return cyber.createToken({
             userId: result.insertId,
             firstName: user.firstName,
@@ -49,6 +53,7 @@ class AuthService {
     }
 
     public async login(credentials: CredentialsModel): Promise<string> {
+        // Login uses the same validation contract as register to keep error handling predictable.
         validateCredentials(credentials);
 
         const sql = `SELECT * FROM users WHERE email = ?`;
@@ -65,6 +70,7 @@ class AuthService {
             throw new UnauthorizedError("Incorrect email or password.");
         }
 
+        // The token mirrors the database role so the UI can react without another round-trip.
         return cyber.createToken({
             userId: user.userId,
             firstName: user.firstName,

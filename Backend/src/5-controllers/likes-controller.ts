@@ -4,6 +4,7 @@ import { likesService } from "../4-services/likes-service";
 import { StatusCode } from "../3-models/enums";
 import { verifyLoggedIn } from "../6-middleware/verify-logged-in";
 
+// Like routes are user-scoped, so the user id always comes from the verified token rather than the body.
 class LikesController {
 
     public router: Router = express.Router();

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { cyber } from "../2-utils/cyber";
 import { UnauthorizedError } from "../3-models/client-errors";
 
+// Verifies the bearer token once and attaches the decoded payload for downstream handlers.
 class VerifyLoggedInMiddleware {
 
     public verify(request: Request, response: Response, next: NextFunction): void {
@@ -15,6 +16,7 @@ class VerifyLoggedInMiddleware {
             const token = authHeader.substring(7);
             const user = cyber.verifyToken(token);
 
+            // Controllers and services read the current user from request.user after this middleware.
             (request as any).user = user;
 
             next();

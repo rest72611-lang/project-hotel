@@ -1,0 +1,5 @@
+$kind: http-request
+description: Admin only. Deletes the vacation created for testing.
+url: "{{baseUrl}}/vacations/{{newVacationId}}"
+method: DELETE
+order: 4000

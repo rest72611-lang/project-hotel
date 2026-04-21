@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { mcpTools } from "./mcp-tools";
 import z from "zod";
 
+// Registers MCP tools with their runtime validation schema and implementation callback.
 class McpRegister {
 
     public registerGetAllVacationsTool(mcpServer: McpServer): void {

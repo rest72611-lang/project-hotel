@@ -16,6 +16,7 @@ import { authService } from "../../../Services/AuthService";
 import { reportService } from "../../../Services/report-service";
 
 function VacationsReportPage() {
+    // The report page is derived from the vacations dataset rather than a dedicated reporting endpoint.
     const [reportData, setReportData] = useState<ReportModel[]>([]);
     const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
@@ -50,6 +51,7 @@ function VacationsReportPage() {
 
     function exportCsv(): void {
         try {
+            // A UTF-8 BOM is prepended so Excel opens the CSV with the expected encoding.
             let csv = "\uFEFF";
             csv += "Destination,Likes\n";
 
@@ -83,7 +85,7 @@ function VacationsReportPage() {
 
     return (
         <div className="VacationsReportPage">
-            <h1>דף הצגת דו"ח חופשות</h1>
+            <h1>Vacations Report</h1>
 
             {error && <div className="errorBox">{error}</div>}
 

@@ -1,0 +1,19 @@
+1. There are no client-side validations.
+2. A user trying to reach a protected page without being logged in should be redirected to the Login page.
+3. The app currently returns the user to home.
+4. It should be possible to tell whether the current user has liked a vacation.
+5. Display only 9 vacations per page and allow moving to the next page with pagination.
+6. Support image upload.
+7. Add filter buttons that show only:
+   - vacations liked by the current user
+   - vacations currently active
+   - vacations that have not started yet
+   - all vacations
+8. At the top of the page, show a button for adding a new vacation.
+9. The admin page is missing a label.
+10. Why is the image not required?
+11. The price validation error message is unclear.
+12. Past dates should not be selectable.
+13. Why is the image not visible?
+14. In the database, only the vacation file name should be saved, including the extension.
+15. A confirmation dialog is missing.

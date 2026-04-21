@@ -1,6 +1,6 @@
 import OpenAI from "openai";
-import { vacationsService } from "../4-services/vacations-service";
 import z from "zod";
+import { vacationsService } from "../4-services/vacations-service";
 
 class AiService {
 
@@ -44,7 +44,7 @@ class AiService {
         const messages: any[] = [
             {
                 role: "system",
-                content: "You are a vacations assistant. Use only the available tools when needed. Answer in Hebrew."
+                content: "You are a vacations assistant. Use only the available tools when needed. Answer in English."
             },
             {
                 role: "user",
@@ -63,13 +63,13 @@ class AiService {
         const assistantMessage = firstResponse.choices?.[0]?.message;
 
         if (!assistantMessage) {
-            return "לא התקבלה תשובה.";
+            return "No answer was received.";
         }
 
         const toolCalls = assistantMessage.tool_calls;
 
         if (!toolCalls || toolCalls.length === 0) {
-            return assistantMessage.content || "לא התקבלה תשובה.";
+            return assistantMessage.content || "No answer was received.";
         }
 
         messages.push(assistantMessage);
@@ -120,7 +120,7 @@ class AiService {
             temperature: 0
         });
 
-        return finalResponse.choices?.[0]?.message?.content || "לא התקבלה תשובה.";
+        return finalResponse.choices?.[0]?.message?.content || "No answer was received.";
     }
 }
 

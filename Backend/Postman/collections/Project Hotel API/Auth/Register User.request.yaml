@@ -1,0 +1,37 @@
+$kind: http-request
+description: Creates a regular user. In this project, register always creates role=user.
+url: "{{baseUrl}}/auth/register"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "firstName": "Demo",
+      "lastName": "User",
+      "email": "{{userEmail}}",
+      "password": "{{userPassword}}"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Register returned success', function () {
+          pm.expect(pm.response.code).to.be.oneOf([200, 201]);
+      });
+
+      const token = pm.response.json();
+      pm.collectionVariables.set('userToken', token);
+      pm.collectionVariables.set('currentToken', token);
+
+      const payloadPart = token.split('.')[1];
+      const normalized = payloadPart.replace(/-/g, '+').replace(/_/g, '/');
+      const padded = normalized + '='.repeat((4 - normalized.length % 4) % 4);
+      const payload = JSON.parse(atob(padded));
+
+      pm.collectionVariables.set('userUserId', String(payload.userId));
+      pm.collectionVariables.set('currentUserId', String(payload.userId));
+    language: text/javascript
+order: 1000

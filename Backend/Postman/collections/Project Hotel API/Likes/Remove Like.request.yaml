@@ -1,0 +1,5 @@
+$kind: http-request
+description: Logged-in user removes a like from a vacation.
+url: "{{baseUrl}}/likes/{{vacationId}}"
+method: DELETE
+order: 2000

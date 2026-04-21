@@ -1,0 +1,52 @@
+$kind: collection
+description: Postman collection for the Vacation System project. Includes auth,
+  vacations, likes, AI recommendation, MCP question flow, and admin CRUD
+  requests.
+variables:
+  baseUrl: http://localhost:4001/api
+  adminEmail: admin@admin.com
+  adminPassword: "1234"
+  userEmail: user@example.com
+  userPassword: "1234"
+  currentToken: ""
+  adminToken: ""
+  userToken: ""
+  currentUserId: ""
+  adminUserId: ""
+  userUserId: ""
+  vacationId: "1"
+  newVacationId: ""
+scripts:
+  - type: http:beforeRequest
+    code: |-
+      if (!pm.collectionVariables.get('baseUrl')) {
+          pm.collectionVariables.set('baseUrl', 'http://localhost:4001/api');
+      }
+      if (!pm.collectionVariables.get('adminEmail')) {
+          pm.collectionVariables.set('adminEmail', 'admin@admin.com');
+      }
+      if (!pm.collectionVariables.get('adminPassword')) {
+          pm.collectionVariables.set('adminPassword', '1234');
+      }
+      if (!pm.collectionVariables.get('userEmail')) {
+          pm.collectionVariables.set('userEmail', 'user@example.com');
+      }
+      if (!pm.collectionVariables.get('userPassword')) {
+          pm.collectionVariables.set('userPassword', '1234');
+      }
+      if (!pm.collectionVariables.get('vacationId')) {
+          pm.collectionVariables.set('vacationId', '1');
+      }
+      if (!pm.collectionVariables.get('newVacationId')) {
+          pm.collectionVariables.set('newVacationId', '1');
+      }
+      if (!pm.collectionVariables.get('currentUserId')) {
+          pm.collectionVariables.set('currentUserId', '1');
+      }
+    language: text/javascript
+auth:
+  - id: 67e59e60-fe6d-42f0-9d7c-192f7189d788
+    type: bearer
+    name: bearer auth
+    credentials:
+      token: "{{currentToken}}"

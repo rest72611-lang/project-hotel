@@ -4,7 +4,7 @@ export interface VacationModel {
     description: string;
     startDate: string;
     endDate: string;
-    price: string;
+    price: number;
     imageName: string;
     likesCount: number;
     isLiked: number;

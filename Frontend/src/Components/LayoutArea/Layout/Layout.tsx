@@ -4,6 +4,7 @@ import Routing from "../Routing/Routing";
 
 import "./Layout.css";
 
+// Stable page shell: header and menu stay mounted while routed content changes in main.
 function Layout() {
     return (
         <div className="Layout">

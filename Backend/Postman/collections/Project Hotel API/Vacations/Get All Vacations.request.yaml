@@ -1,0 +1,6 @@
+$kind: http-request
+description: Logged-in user or admin. This endpoint is also the data source for
+  the report page.
+url: "{{baseUrl}}/vacations"
+method: GET
+order: 1000

@@ -1,89 +1,372 @@
-.Filters {
-    margin: 20px 0 25px 0;
+.VacationsPage {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.VacationsOverviewGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.VacationsOverviewCard {
+    padding: 18px 20px;
+    border-radius: 18px;
+    background:
+        radial-gradient(circle at top right, rgba(157, 197, 255, 0.18), transparent 28%),
+        linear-gradient(140deg, #ffffff 0%, #eef4ff 48%, #dbe7ff 100%);
+    border: 1px solid rgba(49, 90, 168, 0.08);
+    box-shadow: 0 14px 30px rgba(25, 49, 94, 0.08);
+}
+
+.VacationsOverviewLabel {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #5d7088;
+}
+
+.VacationsOverviewCard strong {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    color: #173666;
+}
+
+.VacationsPageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+.VacationsPageHeader h2 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    color: #173666;
+    letter-spacing: -0.03em;
+}
+
+.VacationsPageHeader p {
+    margin: 10px 0 0;
+    color: #56687d;
+    line-height: 1.7;
+}
+
+.VacationsAdminAddButton {
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
+    min-height: 46px;
+    padding: 0 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2d5fd4 0%, #4b75e6 100%);
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 10px 20px rgba(45, 95, 212, 0.18);
+}
+
+.VacationsAdminAddButton:hover {
+    transform: translateY(-1px);
+}
+
+.Filters {
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
 }
 
 .Filters button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 10px;
-    background-color: royalblue;
-    color: white;
+    padding: 11px 18px;
+    border: 1px solid rgba(49, 90, 168, 0.14);
+    border-radius: 12px;
+    background: #ffffff;
+    color: #284a77;
     cursor: pointer;
     font-size: 15px;
-    font-weight: 500;
-    transition: 0.2s;
+    font-weight: 700;
+    transition: 0.2s ease;
+    box-shadow: 0 10px 20px rgba(25, 49, 94, 0.06);
 }
 
 .Filters button:hover {
-    background-color: #274fd0;
+    transform: translateY(-1px);
+    background: #eef4ff;
 }
 
 .Filters .ActiveFilter {
-    background-color: #1e3a8a;
+    background: linear-gradient(135deg, #2d5fd4 0%, #4b75e6 100%);
+    color: white;
+    border-color: transparent;
 }
 
 .VacationsContainer {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
-.VacationCard {
-    width: 280px;
-    border: 1px solid #d8dee9;
+.VacationsSkeletonGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.VacationSkeletonCard {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 14px 30px rgba(25, 49, 94, 0.08);
+}
+
+.VacationSkeletonHeader,
+.VacationSkeletonImage,
+.VacationSkeletonLine,
+.VacationSkeletonMeta,
+.VacationSkeletonButton {
+    background: linear-gradient(90deg, #edf3fb 0%, #f8fbff 50%, #edf3fb 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+}
+
+.VacationSkeletonHeader {
+    width: 62%;
+    height: 22px;
+    border-radius: 10px;
+}
+
+.VacationSkeletonImage {
+    width: 100%;
+    height: 190px;
     border-radius: 16px;
-    padding: 16px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-    background-color: white;
+}
+
+.VacationSkeletonLine {
+    width: 58%;
+    height: 16px;
+    border-radius: 999px;
+}
+
+.VacationSkeletonLineWide {
+    width: 100%;
+    height: 54px;
+    border-radius: 14px;
+}
+
+.VacationSkeletonMetaGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.VacationSkeletonMeta {
+    height: 40px;
+    border-radius: 12px;
+}
+
+.VacationSkeletonActions {
+    display: flex;
+    gap: 10px;
+}
+
+.VacationSkeletonButton {
+    width: 110px;
+    height: 42px;
+    border-radius: 12px;
+}
+
+.VacationsEmptyState {
+    padding: 34px 28px;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at top right, rgba(157, 197, 255, 0.22), transparent 28%),
+        linear-gradient(140deg, #ffffff 0%, #eef4ff 48%, #dbe7ff 100%);
+    border: 1px solid rgba(49, 90, 168, 0.1);
+    box-shadow: 0 16px 34px rgba(25, 49, 94, 0.08);
+    text-align: center;
+}
+
+.VacationsEmptyState h3 {
+    margin: 0 0 10px;
+    color: #173666;
+}
+
+.VacationsEmptyState p {
+    max-width: 56ch;
+    margin: 0 auto 18px;
+    color: #56687d;
+    line-height: 1.7;
+}
+
+.VacationsEmptyState button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2d5fd4 0%, #4b75e6 100%);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(45, 95, 212, 0.18);
+}
+
+.VacationCard {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border: 1px solid rgba(49, 90, 168, 0.08);
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 0 14px 30px rgba(25, 49, 94, 0.08);
+    background: #ffffff;
 }
 
 .VacationCard img {
     width: 100%;
-    height: 170px;
+    height: 190px;
     object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 12px;
+    border-radius: 16px;
 }
 
-.VacationCard button {
-    margin-right: 8px;
-    margin-top: 8px;
-    padding: 8px 14px;
+.VacationCardTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.VacationCardTop h3 {
+    margin: 0;
+    font-size: 1.22rem;
+    color: #173666;
+}
+
+.VacationBadge {
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #edf4ff;
+    color: #315aa8;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.VacationBadgeLiked {
+    background: #dff7ea;
+    color: #197548;
+}
+
+.VacationDescription {
+    margin: 0;
+    color: #485a72;
+    line-height: 1.7;
+}
+
+.VacationMeta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.VacationMeta span {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: #f7faff;
+    color: #294a77;
+    font-size: 0.93rem;
+    font-weight: 600;
+}
+
+.VacationStatusText {
+    margin: 0;
+    color: #5a6a7e;
+    font-weight: 600;
+}
+
+.VacationActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.VacationActionButton {
+    min-width: 108px;
+    padding: 10px 15px;
     border: none;
-    border-radius: 10px;
-    background-color: royalblue;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2d5fd4 0%, #4b75e6 100%);
     color: white;
     cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 10px 20px rgba(45, 95, 212, 0.18);
 }
 
-.VacationCard button:hover {
-    background-color: #274fd0;
+.VacationActionButton:hover {
+    transform: translateY(-1px);
+}
+
+.VacationDeleteButton {
+    background: linear-gradient(135deg, #c6415d 0%, #e15b77 100%);
+    box-shadow: 0 10px 20px rgba(198, 65, 93, 0.18);
 }
 
 .Pagination {
-    margin-top: 30px;
-    text-align: center !important;
-    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
 }
 
 .Pagination button {
-    margin: 0 5px;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 8px;
-    background-color: royalblue;
-    color: white;
+    min-width: 44px;
+    padding: 10px 14px;
+    border: 1px solid rgba(49, 90, 168, 0.14);
+    border-radius: 12px;
+    background: #ffffff;
+    color: #284a77;
     cursor: pointer;
     font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 10px 20px rgba(25, 49, 94, 0.06);
 }
 
 .Pagination button:disabled {
-    background-color: lightgray;
-    color: black;
+    background: linear-gradient(135deg, #2d5fd4 0%, #4b75e6 100%);
+    color: white;
     cursor: default;
+    border-color: transparent;
+}
+
+@media (max-width: 700px) {
+    .VacationsOverviewGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .VacationsPageHeader {
+        align-items: flex-start;
+    }
+
+    .VacationMeta {
+        grid-template-columns: 1fr;
+    }
+
+    .VacationSkeletonMetaGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }

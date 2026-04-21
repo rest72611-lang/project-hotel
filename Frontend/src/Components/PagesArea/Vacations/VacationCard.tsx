@@ -20,37 +20,50 @@ function VacationCard(props: VacationCardProps) {
 
     return (
         <div className="VacationCard">
-            <h3>{vacation.destination}</h3>
+            <div className="VacationCardTop">
+                <h3>{vacation.destination}</h3>
+                <span className={vacation.isLiked === 1 ? "VacationBadge VacationBadgeLiked" : "VacationBadge"}>
+                    {vacation.isLiked === 1 ? "Liked" : "Available"}
+                </span>
+            </div>
 
             <img src={imageUrl} alt={vacation.destination} />
 
-            <p>{vacation.description}</p>
-            <p>Start: {new Date(vacation.startDate).toLocaleDateString()}</p>
-            <p>End: {new Date(vacation.endDate).toLocaleDateString()}</p>
-            <p>Price: {Number(vacation.price).toLocaleString()} ₪</p>
-            <p>Likes: {vacation.likesCount}</p>
-            <p>{vacation.isLiked === 1 ? "❤️ You liked this vacation" : "🤍 You have not liked this vacation"}</p>
+            <p className="VacationDescription">{vacation.description}</p>
 
-            {!isAdmin && (
-                <>
+            <div className="VacationMeta">
+                <span>Start: {new Date(vacation.startDate).toLocaleDateString()}</span>
+                <span>End: {new Date(vacation.endDate).toLocaleDateString()}</span>
+                <span>Price: ${Number(vacation.price).toLocaleString()}</span>
+                <span>Likes: {vacation.likesCount}</span>
+            </div>
+
+            <p className="VacationStatusText">
+                {vacation.isLiked === 1 ? "You liked this vacation" : "You have not liked this vacation"}
+            </p>
+
+            <div className="VacationActions">
+                {!isAdmin && (
+                    <>
                     {vacation.isLiked === 1 ? (
-                        <button onClick={() => onUnlike(vacation.vacationId)}>Unlike</button>
+                        <button className="VacationActionButton" onClick={() => onUnlike(vacation.vacationId)}>Unlike</button>
                     ) : (
-                        <button onClick={() => onLike(vacation.vacationId)}>Like</button>
+                        <button className="VacationActionButton" onClick={() => onLike(vacation.vacationId)}>Like</button>
                     )}
-                </>
-            )}
+                    </>
+                )}
 
-            {isAdmin && (
-                <>
-                    <button onClick={() => navigate(`/admin/edit-vacation/${vacation.vacationId}`)}>
+                {isAdmin && (
+                    <>
+                    <button className="VacationActionButton" onClick={() => navigate(`/admin/edit-vacation/${vacation.vacationId}`)}>
                         Edit
                     </button>
-                    <button onClick={() => onDelete(vacation.vacationId)}>
+                    <button className="VacationActionButton VacationDeleteButton" onClick={() => onDelete(vacation.vacationId)}>
                         Delete
                     </button>
-                </>
-            )}
+                    </>
+                )}
+            </div>
         </div>
     );
 }

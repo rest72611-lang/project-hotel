@@ -10,8 +10,7 @@ import Recommendation from "../../PagesArea/Recommendation/Recommendation";
 import McpPage from "../../PagesArea/McpPage/McpPage";
 import VacationsReportPage from "../../PagesArea/Reports/VacationsReportPage";
 
-
-
+// Keeps the app route map in one place; per-page guards handle role-based redirects.
 function Routing() {
     return (
         <Routes>

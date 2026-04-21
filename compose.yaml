@@ -1,6 +1,7 @@
 services:
 
   mysql-service:
+    profiles: ["container-db"]
     image: mysql:8
     container_name: mysql-container
 
@@ -35,10 +36,10 @@ services:
     environment:
       ENVIRONMENT: development
       PORT: 4000
-      MYSQL_HOST: mysql-service
-      MYSQL_USER: root
-      MYSQL_PASSWORD: trhvayhbcrd123
-      MYSQL_DATABASE: vacations_db
+      MYSQL_HOST: ${MYSQL_HOST:-host.docker.internal}
+      MYSQL_USER: ${MYSQL_USER:-root}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-trhvayhbcrd123}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-vacations_db}
       JWT_SECRET: ThisIsMyVerySecretKey123
       OPENAI_API_KEY: ${OPENAI_API_KEY}
 
@@ -48,9 +49,8 @@ services:
     volumes:
       - images-volume:/app/src/1-assets/images
 
-    depends_on:
-      mysql-service:
-        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
     restart: unless-stopped
 

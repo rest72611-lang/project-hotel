@@ -6,7 +6,7 @@ class Notify {
         position: { x: "center", y: "top" },
         duration: 3000,
         dismissible: true,
-        ripple: true // Ripple = אדווה = גל קטן
+        ripple: true
     });
 
     public success(message: string): void {

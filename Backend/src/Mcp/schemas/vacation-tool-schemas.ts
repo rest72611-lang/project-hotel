@@ -1,5 +1,6 @@
 import z from "zod";
 
+// Shared schemas for MCP-facing vacation tools. Keeping them here avoids duplicating contract rules.
 export const GetAllVacationsInputSchema = z.object({
     userId: z.number().int().positive()
 });

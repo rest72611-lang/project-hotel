@@ -1,0 +1,35 @@
+$kind: http-request
+description: Uses the seeded admin account from the SQL file.
+url: "{{baseUrl}}/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "{{adminEmail}}",
+      "password": "{{adminPassword}}"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Login admin returned 200', function () {
+          pm.response.to.have.status(200);
+      });
+
+      const token = pm.response.json();
+      pm.collectionVariables.set('adminToken', token);
+      pm.collectionVariables.set('currentToken', token);
+
+      const payloadPart = token.split('.')[1];
+      const normalized = payloadPart.replace(/-/g, '+').replace(/_/g, '/');
+      const padded = normalized + '='.repeat((4 - normalized.length % 4) % 4);
+      const payload = JSON.parse(atob(padded));
+
+      pm.collectionVariables.set('adminUserId', String(payload.userId));
+      pm.collectionVariables.set('currentUserId', String(payload.userId));
+    language: text/javascript
+order: 3000

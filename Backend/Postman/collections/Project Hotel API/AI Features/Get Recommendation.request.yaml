@@ -1,0 +1,13 @@
+$kind: http-request
+description: Logged-in users only.
+url: "{{baseUrl}}/recommendations"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "destination": "Barcelona"
+    }
+order: 1000

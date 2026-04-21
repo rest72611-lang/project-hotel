@@ -11,9 +11,11 @@ export interface TokenPayload {
     role: Role;
 }
 
+// Thin JWT wrapper used by auth services and middleware.
 class Cyber {
 
     public createToken(payload: TokenPayload): string {
+        // The token embeds the minimal identity data the frontend needs after login.
         return jwt.sign(payload, appConfig.jwtSecret as string, { expiresIn: "12h" });
     }
 
@@ -22,6 +24,7 @@ class Cyber {
             return jwt.verify(token, appConfig.jwtSecret as string) as TokenPayload;
         }
         catch {
+            // Normalizing JWT failures into a domain error keeps middleware responses consistent.
             throw new UnauthorizedError("Invalid token.");
         }
     }

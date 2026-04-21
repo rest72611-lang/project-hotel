@@ -1,0 +1,163 @@
+.AuthPage {
+    min-height: calc(100vh - 220px);
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.AuthCard {
+    width: min(1080px, 100%);
+    display: grid;
+    grid-template-columns: minmax(300px, 1.1fr) minmax(320px, 0.95fr);
+    border-radius: 26px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 22px 50px rgba(18, 45, 90, 0.12);
+}
+
+.AuthIntro {
+    padding: 40px;
+    background:
+        radial-gradient(circle at top left, rgba(146, 190, 255, 0.42), transparent 28%),
+        linear-gradient(140deg, #1f4ca3 0%, #2c67d0 55%, #8db9ff 100%);
+    color: white;
+}
+
+.AuthEyebrow {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.AuthIntro h2 {
+    margin: 18px 0 14px;
+    font-size: clamp(1.9rem, 3vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+}
+
+.AuthIntro p {
+    margin: 0;
+    max-width: 44ch;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.AuthFormPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 34px;
+}
+
+.AuthFormPanel form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.AuthPanelHeader h3 {
+    margin: 0;
+    font-size: 1.65rem;
+    color: #173666;
+}
+
+.AuthPanelHeader p {
+    margin: 8px 0 0;
+    line-height: 1.65;
+    color: #55657a;
+}
+
+.AuthGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.AuthFieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.AuthFieldGroup label {
+    font-weight: 700;
+    color: #24456f;
+}
+
+.AuthFieldGroup input {
+    height: 46px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid #d4dceb;
+    background: #f8fbff;
+    font-size: 0.98rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.AuthFieldGroup input:focus {
+    outline: none;
+    border-color: #4d7ae4;
+    box-shadow: 0 0 0 4px rgba(77, 122, 228, 0.14);
+    background: #ffffff;
+}
+
+.AuthPrimaryButton {
+    height: 48px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2d5fd4 0%, #4b75e6 100%);
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 12px 24px rgba(45, 95, 212, 0.24);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.AuthPrimaryButton:hover {
+    transform: translateY(-1px);
+}
+
+.AuthError {
+    min-height: 18px;
+    font-size: 0.9rem;
+    color: #c03d57;
+}
+
+.AuthFooterText {
+    margin: 0;
+    text-align: center;
+    color: #59697c;
+}
+
+.AuthFooterText a {
+    color: #2757b8;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+@media (max-width: 900px) {
+    .AuthPage {
+        padding: 18px;
+    }
+
+    .AuthCard {
+        grid-template-columns: 1fr;
+    }
+
+    .AuthIntro,
+    .AuthFormPanel {
+        padding: 24px;
+    }
+
+    .AuthGrid {
+        grid-template-columns: 1fr;
+    }
+}

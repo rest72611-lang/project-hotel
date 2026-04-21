@@ -5,6 +5,7 @@ import { ResourceNotFoundError } from "../3-models/client-errors";
 import { VacationModel } from "../3-models/vacation-model";
 import { validateVacation } from "../3-models/vacation-validation";
 
+// Encapsulates vacation persistence and the small amount of file lifecycle coordination around it.
 class VacationsService {
 
     public async getAllVacations(userId: number): Promise<RowDataPacket[]> {
@@ -32,6 +33,7 @@ class VacationsService {
             ORDER BY v.startDate ASC
         `;
 
+        // Returning likesCount + isLiked from the query keeps the UI simple and avoids N+1 lookups.
         return await dal.execute(sql, [userId]) as RowDataPacket[];
     }
 
@@ -47,9 +49,10 @@ class VacationsService {
     }
 
     public async addVacation(vacation: VacationModel): Promise<object> {
-        validateVacation(vacation);
+        validateVacation(vacation, { requireImage: true, allowPastDates: false });
 
         let imageName: string | null = null;
+        // Only the generated filename is persisted; the binary file lives on disk.
         if (vacation.image) imageName = await fileSaver.saveImage(vacation.image);
 
         const sql = `
@@ -70,12 +73,13 @@ class VacationsService {
     }
 
     public async updateVacation(vacationId: number, vacation: VacationModel): Promise<object> {
-        validateVacation(vacation);
+        validateVacation(vacation, { requireImage: false, allowPastDates: true });
 
         const existingVacation = await this.getOneVacation(vacationId);
         let imageName = existingVacation.imageName as string | null;
 
         if (vacation.image) {
+            // Replace the old file only when a new upload was supplied.
             if (imageName) fileSaver.deleteImage(imageName);
             imageName = await fileSaver.saveImage(vacation.image);
         }
@@ -103,6 +107,7 @@ class VacationsService {
         const vacation = await this.getOneVacation(vacationId);
 
         if (vacation.imageName) {
+            // Cleaning the file here keeps database and filesystem state in sync.
             fileSaver.deleteImage(vacation.imageName as string);
         }
 

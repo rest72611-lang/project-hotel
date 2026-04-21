@@ -1,8 +1,8 @@
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 
+// Small formatter layer so every MCP tool returns a consistent text payload shape.
 class McpHelper {
 
-    // Return tool result:
     public getToolResult(data: any): CallToolResult {
         return {
             content: [
@@ -14,7 +14,6 @@ class McpHelper {
         };
     }
 
-    // Return tool error:
     public getErrorResult(message: string): CallToolResult {
         return {
             content: [
