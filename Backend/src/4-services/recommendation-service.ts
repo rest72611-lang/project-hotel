@@ -1,5 +1,32 @@
 import OpenAI from "openai";
+import { z } from "zod";
 import { ValidationError } from "../3-models/client-errors";
+
+const recommendationItemSchema = z.object({
+    name: z.string().min(1),
+    description: z.string().min(1),
+    highlights: z.array(z.string().min(1)).length(3),
+    tip: z.string().min(1)
+});
+
+const recommendationResponseSchema = z.object({
+    title: z.string().min(1),
+    intro: z.string().min(1),
+    recommendations: z.array(recommendationItemSchema).length(3)
+});
+
+export interface RecommendationItem {
+    name: string;
+    description: string;
+    highlights: string[];
+    tip: string;
+}
+
+export interface RecommendationResponse {
+    title: string;
+    intro: string;
+    recommendations: RecommendationItem[];
+}
 
 // Wraps the AI call behind a strict JSON contract so the frontend receives render-ready data.
 class RecommendationService {
@@ -11,13 +38,15 @@ class RecommendationService {
         });
     }
 
-    public async getRecommendation(destination: string): Promise<any> {
-        if (!destination || !destination.trim()) {
+    public async getRecommendation(destination: string): Promise<RecommendationResponse> {
+        const normalizedDestination = destination?.trim();
+
+        if (!normalizedDestination) {
             throw new ValidationError("Missing destination.");
         }
 
-        const systemContent = this.getSystemContent(destination);
-        const userContent = this.getUserContent(destination);
+        const systemContent = this.getSystemContent(normalizedDestination);
+        const userContent = this.getUserContent(normalizedDestination);
 
         const response = await this.openai.responses.create({
             model: "gpt-5.4",
@@ -30,10 +59,11 @@ class RecommendationService {
         try {
             // The model is instructed to return JSON, but we still defensively sanitize before parsing.
             const json = this.sanitize(response.output_text);
-            return JSON.parse(json);
+            const parsed = JSON.parse(json);
+            return recommendationResponseSchema.parse(parsed);
         }
         catch {
-            throw new ValidationError("AI returned invalid JSON.");
+            throw new ValidationError("AI returned invalid recommendation data.");
         }
     }
 
@@ -120,6 +150,11 @@ Return the answer ONLY in the following JSON format:
         // Extract the outermost JSON object in case the model wraps it with explanatory text.
         const start = completion.indexOf("{");
         const end = completion.lastIndexOf("}");
+
+        if (start === -1 || end === -1 || end < start) {
+            throw new ValidationError("AI returned invalid JSON.");
+        }
+
         return completion.substring(start, end + 1);
     }
 }
