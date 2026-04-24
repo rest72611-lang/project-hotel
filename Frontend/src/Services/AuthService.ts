@@ -4,6 +4,15 @@ import { UserModel } from "../Models/UserModel";
 import { appConfig } from "../Utils/AppConfig";
 import { api } from "./Service";
 
+interface DecodedTokenPayload {
+    userId: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
+    exp?: number;
+}
+
 // Keeps auth state in one place so UI components can stay mostly declarative.
 class AuthService {
     private readonly authChangedEvent = "auth-changed";
@@ -47,19 +56,31 @@ class AuthService {
         return () => window.removeEventListener(this.authChangedEvent, callback);
     }
 
-    private decodeToken(token: string): any {
+    private decodeToken(token: string): DecodedTokenPayload {
         // JWT payloads use base64url, so we normalize them before calling atob.
         const payload = token.split(".")[1];
         const normalizedPayload = payload.replace(/-/g, "+").replace(/_/g, "/");
         const paddedPayload = normalizedPayload.padEnd(Math.ceil(normalizedPayload.length / 4) * 4, "=");
         const json = atob(paddedPayload);
-        return JSON.parse(json);
+        return JSON.parse(json) as DecodedTokenPayload;
+    }
+
+    private isTokenExpired(payload: DecodedTokenPayload): boolean {
+        if (!payload.exp) {
+            return false;
+        }
+
+        return payload.exp * 1000 < Date.now();
     }
 
     private saveToken(token: string): UserModel {
         localStorage.setItem("token", token);
 
         const payload = this.decodeToken(token);
+
+        if (this.isTokenExpired(payload)) {
+            throw new Error("Token expired.");
+        }
 
         const user: UserModel = {
             userId: payload.userId,
