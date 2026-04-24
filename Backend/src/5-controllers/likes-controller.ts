@@ -16,7 +16,7 @@ class LikesController {
 
     private async addLike(request: Request, response: Response, next: NextFunction) {
         try {
-            const user = (request as any).user;
+            const user = request.user;
             const vacationId = +request.params.vacationId;
 
             await likesService.addLike(user.userId, vacationId);
@@ -29,7 +29,7 @@ class LikesController {
 
     private async removeLike(request: Request, response: Response, next: NextFunction) {
         try {
-            const user = (request as any).user;
+            const user = request.user;
             const vacationId = +request.params.vacationId;
 
             await likesService.removeLike(user.userId, vacationId);

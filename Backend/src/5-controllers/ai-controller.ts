@@ -13,7 +13,7 @@ class AiController {
 
     private async ask(request: Request, response: Response, next: NextFunction) {
         try {
-            const user = (request as any).user;
+            const user = request.user;
             const { question } = request.body;
             // The current user identity must come from the verified token, not from client-provided input.
             const answer = await aiService.askQuestion(user.userId, question);

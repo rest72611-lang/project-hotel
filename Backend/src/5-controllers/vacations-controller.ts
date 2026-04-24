@@ -20,7 +20,7 @@ class VacationsController {
 
     private async getAllVacations(request: Request, response: Response, next: NextFunction) {
         try {
-            const user = (request as any).user;
+            const user = request.user;
             // The current user id is required because the query computes the personalized isLiked flag.
             const vacations = await vacationsService.getAllVacations(user.userId);
             response.status(StatusCode.Ok).json(vacations);

@@ -16,7 +16,7 @@ class Cyber {
 
     public createToken(payload: TokenPayload): string {
         // The token embeds the minimal identity data the frontend needs after login.
-        return jwt.sign(payload, appConfig.jwtSecret as string, { expiresIn: "12h" });
+        return jwt.sign(payload, appConfig.jwtSecret as string, { expiresIn: "1h" });
     }
 
     public verifyToken(token: string): TokenPayload {

@@ -17,7 +17,7 @@ class VerifyLoggedInMiddleware {
             const user = cyber.verifyToken(token);
 
             // Controllers and services read the current user from request.user after this middleware.
-            (request as any).user = user;
+            request.user = user;
 
             next();
         }

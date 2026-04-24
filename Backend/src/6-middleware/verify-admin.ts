@@ -13,7 +13,7 @@ class VerifyAdminMiddleware {
                 return;
             }
 
-            const user = (request as any).user;
+            const user = request.user;
 
             if (user.role !== Role.Admin) {
                 // Keeping this as a separate error type makes authorization failures easy to distinguish.

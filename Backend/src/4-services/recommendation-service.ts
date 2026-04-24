@@ -62,8 +62,20 @@ class RecommendationService {
             const parsed = JSON.parse(json);
             return recommendationResponseSchema.parse(parsed);
         }
-        catch {
-            throw new ValidationError("AI returned invalid recommendation data.");
+        catch (err) {
+            if (err instanceof SyntaxError) {
+                throw new ValidationError("AI returned invalid JSON.");
+            }
+
+            if (err instanceof z.ZodError) {
+                throw new ValidationError("AI returned data in an unexpected format.");
+            }
+
+            if (err instanceof ValidationError) {
+                throw err;
+            }
+
+            throw err;
         }
     }
 
